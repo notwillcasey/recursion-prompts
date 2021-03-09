@@ -250,11 +250,100 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+  if (x === 0 && y === 0) {
+    return NaN;
+  }
+  if (x === 0) {
+    return 0;
+  }
+  if (x < 0 && x > y) {
+    return x;
+  }
+
+  if (x < 0) {
+    if (y < 0) {
+      x -= y;
+      if (x > y) {
+        return x;
+      }
+      x = modulo(x, y);
+      return x;
+    }
+    if (y > 0) {
+      if ((x + y) > 0) {
+        return x;
+      }
+      x += y;
+      if ((x + y) > 0) {
+        return x;
+      }
+      x = modulo(x, y);
+      return x
+    }
+  }
+
+  if (x < y) {
+    return x;
+  }
+  x -= y;
+  if (x < y) {
+    return x;
+  }
+  x = modulo(x, y);
+  return x;
+
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
 var multiply = function(x, y) {
+
+  var result = 0;
+  if (x === 0 || y === 0) {
+    return 0;
+  }
+  if (x < 0 && y < 0) {
+    x = -x ;
+    y = -y;
+  }
+
+  if (x > y || x === y) {
+    if (y < 0) {
+      result += y;
+      x -= 1;
+      if (x === 0) {
+        return result;
+      }
+      result += multiply(x, result);
+      return result;
+    }
+    result += x;
+    y -= 1;
+    if (y === 0) {
+      return result;
+    }
+    result += multiply(result, y);
+    return result;
+  }
+
+  if (x < y) {
+    if (x < 0) {
+      result += x;
+      y -= 1;
+      if (y === 0) {
+        return result;
+      }
+      result += multiply(result, y);
+      return result;
+    }
+    result += y;
+    x -= 1;
+    if (x === 0) {
+      return result;
+    }
+    result += multiply(x, result);
+    return result;
+  }
 };
 
 // 13. Write a function that divides two numbers without using the / operator or
